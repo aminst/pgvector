@@ -32,10 +32,17 @@ IvfflatInit(void)
 #endif
 		);
 
+	add_bool_reloption(ivfflat_relopt_kind, "pq", "Use product quantization",
+					   IVFFLAT_DEFAULT_PQ
+#if PG_VERSION_NUM >= 130000
+					  ,AccessExclusiveLock
+#endif
+		);
+
 	DefineCustomIntVariable("ivfflat.probes", "Sets the number of probes",
 							"Valid range is 1..lists.", &ivfflat_probes,
 							IVFFLAT_DEFAULT_PROBES, IVFFLAT_MIN_LISTS, IVFFLAT_MAX_LISTS, PGC_USERSET, 0, NULL, NULL, NULL);
-
+	
 	MarkGUCPrefixReserved("ivfflat");
 }
 
@@ -146,6 +153,7 @@ ivfflatoptions(Datum reloptions, bool validate)
 {
 	static const relopt_parse_elt tab[] = {
 		{"lists", RELOPT_TYPE_INT, offsetof(IvfflatOptions, lists)},
+		{"pq", RELOPT_TYPE_BOOL, offsetof(IvfflatOptions, pq)}
 	};
 
 #if PG_VERSION_NUM >= 130000

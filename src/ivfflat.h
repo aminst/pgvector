@@ -43,6 +43,7 @@
 #define IVFFLAT_MIN_LISTS		1
 #define IVFFLAT_MAX_LISTS		32768
 #define IVFFLAT_DEFAULT_PROBES	1
+#define IVFFLAT_DEFAULT_PQ false
 
 /* Build phases */
 /* PROGRESS_CREATEIDX_SUBPHASE_INITIALIZE is 1 */
@@ -103,6 +104,7 @@ typedef struct IvfflatOptions
 {
 	int32		vl_len_;		/* varlena header (do not touch directly!) */
 	int			lists;			/* number of lists */
+	bool		pq;				/* use product quantization */
 }			IvfflatOptions;
 
 typedef struct IvfflatSpool

@@ -53,6 +53,20 @@ IvfflatGetLists(Relation index)
 }
 
 /*
+* Check if the index uses product quantization
+*/
+bool IvfflatUsesPQ(Relation index)
+{
+	IvfflatOptions *opts = (IvfflatOptions *) index->rd_options;
+
+	if (opts)
+		return opts->pq;
+
+	return IVFFLAT_DEFAULT_PQ;
+}
+
+
+/*
  * Get proc
  */
 FmgrInfo *
